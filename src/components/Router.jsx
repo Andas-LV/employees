@@ -1,22 +1,27 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Button } from '@mui/material';
-import Employees from './Employees'; // Путь к вашему компоненту Employees
+import {createBrowserRouter} from "react-router-dom";
 
+import App from '../App.jsx'
+import Employees from "../pages/Employees.jsx";
+import Works from "../pages/Works.jsx";
+import Calendar from "../pages/Calendar.jsx";
 
-const Navbar = () => {
-    return (
-        <Router>
-            <AppBar position="static">
-                <Toolbar>
-                    <Button color="inherit" component={Link} to="/employees">Сотрудники</Button>
-                </Toolbar>
-            </AppBar>
-            <Routes>
-                <Route exact path="/employees" component={Employees} />
-            </Routes>
-        </Router>
-    );
-};
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <App />,
+    },
+    {
+        path: "/Employees",
+        element: <Employees />,
+    },
+    {
+        path: "/Works",
+        element: <Works />,
+    },
+    {
+        path: "/Calendar",
+        element: <Calendar />,
+    },
+]);
 
-export default Navbar;
+export default router
