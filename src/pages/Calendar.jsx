@@ -6,7 +6,7 @@ const Calender = () => {
         <Layout>
             <div>
                 <h1>Calender</h1>
-                <MonthCalendar/>
+                {/*<MonthCalendar/>*/}
             </div>
         </Layout>
     );

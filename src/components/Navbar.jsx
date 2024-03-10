@@ -1,4 +1,3 @@
-// Navbar.jsx
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Button, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -6,9 +5,6 @@ import LoginForm from './Login.jsx';
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
-
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
 
     return (
         <>
@@ -21,11 +17,11 @@ const Navbar = () => {
                     </Box>
 
                     <Box>
-                        <Button color="inherit" onClick={handleOpen}>Вход</Button>
+                        <Button color="inherit" onClick={() => setOpen(true)}>Вход</Button>
                     </Box>
                 </Toolbar>
             </AppBar>
-            <LoginForm open={open} handleClose={handleClose} />
+            <LoginForm open={open} handleClose={() => setOpen(false)} />
         </>
     );
 };

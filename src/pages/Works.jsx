@@ -9,13 +9,19 @@ import {
     TableRow,
     Paper,
     TablePagination,
-    Typography
+    Typography,
+    Select,
+    MenuItem,
+    FormControl,
+    InputLabel, Button
 } from '@mui/material';
 import tasks from '../assets/tasks.json';
 
 const Works = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [assigneeFilter, setAssigneeFilter] = useState('');
+    const [dateFilter, setDateFilter] = useState('');
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -26,9 +32,56 @@ const Works = () => {
         setPage(0);
     };
 
+    const handleAssigneeFilterChange = (event) => {
+        setAssigneeFilter(event.target.value);
+    };
+
+    const handleDateFilterChange = (event) => {
+        setDateFilter(event.target.value);
+    };
+
+    const filteredTasks = tasks
+        .filter(task => (assigneeFilter ? task.assignee === assigneeFilter : true))
+        .filter(task => (dateFilter ? task.createdAt === dateFilter : true))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
     return (
         <Layout>
             <Paper>
+                <FormControl>
+                    <InputLabel id="assignee-filter-label">Исполнитель</InputLabel>
+                    <Select
+                        labelId="assignee-filter-label"
+                        value={assigneeFilter}
+                        onChange={handleAssigneeFilterChange}
+                    >
+                        <MenuItem value="">
+                            <em>Все</em>
+                        </MenuItem>
+                        {Array.from(new Set(tasks.map(task => task.assignee))).map(assignee => (
+                            <MenuItem key={assignee} value={assignee}>{assignee}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <FormControl>
+                    <InputLabel id="date-filter-label">Дата создания</InputLabel>
+                    <Select
+                        labelId="date-filter-label"
+                        value={dateFilter}
+                        onChange={handleDateFilterChange}
+                    >
+                        <MenuItem value="">
+                            <em>Все</em>
+                        </MenuItem>
+                        {Array.from(new Set(tasks.map(task => task.createdAt))).map(date => (
+                            <MenuItem key={date} value={date}>{date}</MenuItem>
+                        ))}
+                    </Select>
+                    <Button>
+                        Найти
+                    </Button>
+                </FormControl>
+
                 <TableContainer>
                     <Table stickyHeader aria-label="список работ">
                         <TableHead>
